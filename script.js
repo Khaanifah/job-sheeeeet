@@ -1,3 +1,4 @@
+//BAGIAN 1, 2, 3, 4
 const cart = [
     { title: "Laptop", price: 1000, discountPercent: 10},
     { title: "Mouse", price: 20, discountPercent: 5 },
@@ -302,4 +303,188 @@ function getAllComments(products) {
 
 const allComments = getAllComments(products);
 
-console.log(allComments);
+//console.log(allComments);
+
+//BAGIAN 5, 6, 7, 8
+const laptopPrice = products
+    .filter(product => product.category === "laptops")
+    .map(product => product.price);
+
+const averagePrice = laptopPrice.reduce((total, price) => total + price, 0) / laptopPrice.length;
+
+//console.log(averagePrice);
+
+function getStatistics(products) {
+    const totalProducts = products.length;
+
+    const totalPrice = products.reduce(
+        (sum, product) => sum + product.price,
+        0
+    );
+
+    const averagePrice = totalPrice / totalProducts;
+
+    const highestPrice = Math.max(
+        ...products.map(product => product.price)
+    );
+
+    const lowestPrice = Math.min(
+        ...products.map(product => product.price)
+    );
+
+    const totalStock = products.reduce(
+        (sum, product) => sum + product.stock,
+        0
+    );
+
+    const totalRating = products.reduce(
+        (sum, product) => sum + product.rating,
+        0
+    );
+
+    const averageRating = totalRating / totalProducts;
+
+    return {
+        totalProducts,
+        averagePrice,
+        highestPrice,
+        lowestPrice,
+        totalStock,
+        averageRating
+    };
+}
+
+//console.log(getStatistics(products));
+
+const number = [4, 16, 3, 7, 9];
+
+function linearSearch(array, target) {
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] === target) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+//console.log(linearSearch(number, 3));
+//console.log(linearSearch(products, 2));
+
+function findProductById(products, targetId) {
+    for (let i = 0; i < products.length; i++) {
+        if (products[i].id === targetId) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+//console.log(findProductById(products, 3));
+
+function binarySearch(products, targetId) {
+    let left = 0;
+    let right = products.length - 1;
+
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+
+        if (products[mid].id === targetId) {
+            return mid;
+        }
+
+        if (products[mid].id < targetId) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+
+    return -1;
+}
+
+//console.log(binarySearch(products, 5));
+
+const sortedProducts = [...products].sort((a, b) => a.price - b.price);
+
+function binarySearchByPrice(sortedProducts, targetPrice) {
+    let left = 0;
+    let right = sortedProducts.length - 1;
+
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+
+        if (sortedProducts[mid].price === targetPrice) {
+            return sortedProducts[mid];
+        }
+
+        if (sortedProducts[mid].price < targetPrice) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+
+    return null;
+}
+
+//console.log(sortedProducts);
+//console.log(binarySearchByPrice(sortedProducts, 800));
+
+function bubbleSort(products) {
+  const arr = [...products];
+
+  for (let i = 0; i < arr.length - 1; i++) {
+    let swapped = false;
+
+    for (let j = 0; j < arr.length - 1 - i; j++) {
+      if (arr[j].price > arr[j + 1].price) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+        swapped = true;
+      }
+    }
+
+    if (!swapped) break;
+  }
+
+  return arr;
+}
+
+const bubbleSortProducts = bubbleSort(products);
+
+//console.log(bubbleSortProducts);
+
+function sortProducts(products, sortBy) {
+  const arr = [...products];
+
+  if (sortBy === "price-asc") {
+    return arr.sort((a, b) => a.price - b.price);
+  }
+
+  if (sortBy === "price-desc") {
+    return arr.sort((a, b) => b.price - a.price);
+  }
+
+  if (sortBy === "rating") {
+    return arr.sort((a, b) => b.rating - a.rating);
+  }
+
+  if (sortBy === "title") {
+    return arr.sort((a, b) => a.title.localeCompare(b.title));
+  }
+
+  return arr;
+}
+
+//console.log("Harga termurah:");
+//console.log(sortProducts(products, "price-asc"));
+
+//console.log("Harga termahal:");
+//console.log(sortProducts(products, "price-desc"));
+
+//console.log("Rating tertinggi:");
+//console.log(sortProducts(products, "rating"));
+
+console.log("Judul A-Z:");
+console.log(sortProducts(products, "title"));

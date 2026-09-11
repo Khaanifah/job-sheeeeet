@@ -486,5 +486,146 @@ function sortProducts(products, sortBy) {
 //console.log("Rating tertinggi:");
 //console.log(sortProducts(products, "rating"));
 
-console.log("Judul A-Z:");
-console.log(sortProducts(products, "title"));
+//console.log("Judul A-Z:");
+//console.log(sortProducts(products, "title"));
+
+
+//BAGIAN 9, 10, 11, 12, 13
+function groupByCategory(products) {
+    return products.reduce((groups, product) => {
+        const key = product.category;
+
+        if (!groups[key]) {
+            groups[key] = [];
+        }
+
+        groups[key].push(product);
+
+        return groups;
+    }, {});
+}
+
+const groupedProducts = groupByCategory(products);
+
+//console.log(groupedProducts);
+
+for (const category in groupedProducts) {
+    //console.log(`${category}: ${groupedProducts[category].length} produk`)
+}
+
+function countFrequency(products) {
+  return products.reduce((counts, product) => {
+    counts[product] = (counts[product] || 0) + 1;
+    return counts;
+  }, {});
+}
+
+//console.log(countFrequency(products));
+
+const categoryFrequency = countFrequency(
+  products.map(product => product.category)
+);
+
+const tagFrequency = countFrequency(
+  products.flatMap(product => product.tags)
+);
+
+const ratingFrequency = countFrequency(
+  products.map(product => Math.round(product.rating))
+);
+
+//console.log(categoryFrequency);
+//console.log(tagFrequency);
+//console.log(ratingFrequency);
+
+const uniqueCategories = [
+    ...new Set(products.map(product => product.category))
+];
+
+const uniqueTags = [
+    ...new Set(products.flatMap(product => product.tags))
+];
+
+//console.log(uniqueCategories);
+//console.log(uniqueTags);
+
+function buildProductLookup(products) {
+    const productMap = new Map();
+
+    for (const product of products) {
+        productMap.set(product.id, product);
+    }
+
+    return productMap;
+}
+
+const productMap = buildProductLookup(products);
+
+//console.log(productMap);
+//console.log(productMap.get(10));
+
+class Stack {
+    constructor() {
+        this.items = [];
+    }
+
+    push(item) {
+        this.items.push(item);
+    }
+
+    pop() {
+        return this.items.pop();
+    }
+
+    peek() {
+        return this.items[this.items.length - 1];
+    }
+
+    isEmpty() {
+        return this.items.length === 0;
+    }
+}
+
+const searchHistory = new Stack();
+
+searchHistory.push(products[0].title);
+searchHistory.push(products[1].title);
+searchHistory.push(products[3].title);
+
+//console.log("Search history:");
+//console.log(searchHistory.items);
+
+//console.log("Search terakhir:");
+//console.log(searchHistory.peek());
+
+//console.log("Undo search:");
+//console.log(searchHistory.pop());
+
+//console.log("Search history setelah undo:");
+//console.log(searchHistory.items);
+
+function undoSearch() {
+    if (searchHistory.isEmpty()) {
+        return "Tidak ada riwayat pencarian.";
+    }
+
+    return searchHistory.pop();
+}
+
+//console.log("Search history:");
+//console.log(searchHistory.items);
+
+//console.log("Search terakhir:");
+//console.log(searchHistory.peek());
+
+//console.log("Undo search:");
+//console.log(undoSearch());
+
+//console.log("Search history setelah undo:");
+//console.log(searchHistory.items);
+
+//console.log("Undo search lagi:");
+//console.log(undoSearch());
+
+//console.log("Search history setelah undo kedua:");
+//console.log(searchHistory.items);

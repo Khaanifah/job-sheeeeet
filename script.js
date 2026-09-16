@@ -513,14 +513,12 @@ for (const category in groupedProducts) {
     //console.log(`${category}: ${groupedProducts[category].length} produk`)
 }
 
-function countFrequency(products) {
-  return products.reduce((counts, product) => {
-    counts[product] = (counts[product] || 0) + 1;
+function countFrequency(array) {
+  return array.reduce((counts, item) => {
+    counts[item] = (counts[item] || 0) + 1;
     return counts;
   }, {});
 }
-
-//console.log(countFrequency(products));
 
 const categoryFrequency = countFrequency(
   products.map(product => product.category)
@@ -561,7 +559,6 @@ function buildProductLookup(products) {
 
 const productMap = buildProductLookup(products);
 
-//console.log(productMap);
 //console.log(productMap.get(10));
 
 class Stack {
@@ -629,3 +626,171 @@ function undoSearch() {
 
 //console.log("Search history setelah undo kedua:");
 //console.log(searchHistory.items);
+
+//BAGIAN 14, 15, 16, 17
+class Queue {
+    constructor() {
+        this.items = [];
+    }
+
+    enqueue(item) {
+        this.items.push(item);
+    }
+
+    dequeue() {
+        return this.items.shift();
+    }
+
+    peek() {
+        return this.items[0];
+    }
+}
+
+const requestQueue = new Queue();
+
+requestQueue.enqueue("Request 1");
+requestQueue.enqueue("Request 2");
+requestQueue.enqueue("Request 3");
+
+//console.log("Request queue: ", requestQueue.items);
+//console.log("Request pertama: ", requestQueue.peek());
+//console.log("Request yang diproses: ", requestQueue.dequeue());
+//console.log("Queue setelah request diproses: ", requestQueue.items);
+
+const categories = [
+    {
+        name: "Electronics",
+        children: [
+        { name: "Laptop", children: [] },
+        { name: "Phone", children: [] }
+        ]
+    },
+    {
+        name: "Books",
+        children: [
+        { name: "Novel", children: [] },
+        { name: "Comics", children: [] }
+        ]
+    }
+];
+
+function printCategories(categories, depth = 0) {
+    for (const category of categories) {
+        console.log(" ".repeat(depth) + category.name);
+
+        if (category.children.length > 0) {
+            printCategories(category.children, depth + 1);
+        }
+    }
+}
+
+//printCategories(categories);
+
+const numbers = Array.from({ length: 10000 }, (_, i) => i + 1);
+
+function linearSearch(array, target) {
+    let checks = 0;
+
+    for (let i = 0; i < array.length; i++) {
+        checks++;
+
+        if (array[i] === target) {
+            return {
+                index: i,
+                checks: checks
+            };
+        }
+    }
+
+    return {
+        index: -1,
+        checks: checks
+    };
+}
+
+function binarySearch(array, target) {
+    let left = 0;
+    let right = array.length - 1;
+    let checks = 0;
+
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+
+        checks++;
+
+        if (array[mid] === target) {
+            return {
+                index: mid,
+                checks: checks
+            };
+        }
+
+        if (array[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+
+    return {
+        index: -1,
+        checks: checks
+    };
+}
+
+const target = 10000;
+
+//console.log("Linear Search:", linearSearch(numbers, target));
+//console.log("Binary Search:", (binarySearch(numbers, target)));
+
+const prod = Array.from({ length: 1000 }, (_, i) => ({
+    id: i + 1,
+    title: `Product ${i + 1}`,
+    category: `category-${(i % 10) + 1}`
+}));
+
+function findPairsNestedLoop(prod) {
+    let checks = 0;
+
+    for (let i = 0; i < prod.length; i++) {
+        for (let j = i + 1; j < prod.length; j++) {
+            checks++;
+
+            if (prod[i].category === prod[j].category) {
+            }
+        }
+    }
+
+    return checks;
+}
+
+function groupByCategory(prod) {
+    const groups = new Map();
+    let checks = 0;
+
+    for (const product of prod) {
+        checks++;
+
+        if (!groups.has(prod.category)) {
+            groups.set(prod.category, []);
+        }
+
+        groups.get(prod.category).push(product);
+    }
+
+    return {
+        groups: groups,
+        checks: checks
+    };
+}
+
+const nestedChecks = findPairsNestedLoop(products);
+const mapResult = groupByCategory(products);
+
+console.log("Nested Loop:");
+console.log("Jumlah pemeriksaan:", nestedChecks);
+
+console.log("Grouping dengan Map:");
+console.log("Jumlah pemeriksaan:", mapResult.checks);
+
+console.log("Jumlah kategori:", mapResult.groups.size);

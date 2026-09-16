@@ -8,7 +8,7 @@ export function filterProducts(products = [], search = "", category = "all") {
   });
 }
 
-export function sortProducts(products = [], sortBy = "Default") {
+export function sortProducts(products = [], sortBy = "default") {
   const arr = [...products]; 
   
   switch (sortBy) {

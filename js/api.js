@@ -22,7 +22,7 @@ export const fetchProducts = async () => {
         const data = await response.json();
         return data.products;
     } catch (error) {
-        console.error("Gagal mengambil data produk dari DummyJSON:", error);
+        console.error("Gagal dalam proses pengambilan data produk dari DummyJSON:", error);
         throw error;
     }
 };

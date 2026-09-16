@@ -627,7 +627,7 @@ function undoSearch() {
 //console.log("Search history setelah undo kedua:");
 //console.log(searchHistory.items);
 
-//BAGIAN 14, 15, 16, 17
+//BAGIAN 14, 15, 16
 class Queue {
     constructor() {
         this.items = [];

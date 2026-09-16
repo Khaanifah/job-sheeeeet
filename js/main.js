@@ -23,7 +23,7 @@ async function loadProducts() {
     } catch (error) {
         state.status = "error";
         renderStatusUI(state.status, error.message);
-        console.error("Gagal memuat produk:", error);
+        console.error("Proses memuat produk gagal:", error);
     } finally {
         render();
     }

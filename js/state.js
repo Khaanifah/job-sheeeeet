@@ -3,7 +3,7 @@ export const state = {
     products: initialProducts,
     search: "",
     category: "all",
-    sortBy: "default",
+    sortBy: "Default",
     favorites: [],
-    status: "idle"
-};
+    status: "Idle"
+}; 

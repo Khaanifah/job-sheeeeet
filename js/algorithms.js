@@ -8,7 +8,7 @@ export function filterProducts(products = [], search = "", category = "all") {
   });
 }
 
-export function sortProducts(products = [], sortBy = "default") {
+export function sortProducts(products = [], sortBy = "Default") {
   const arr = [...products]; 
   
   switch (sortBy) {
@@ -65,7 +65,7 @@ export function getCategoryAnalytics(products = []) {
 
 
   const grouped = products.reduce((acc, product) => {
-    const cat = product.category || "uncategorized";
+    const cat = product.category || "Uncategorized";
     if (!acc[cat]) {
       acc[cat] = [];
     }
